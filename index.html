@@ -28,37 +28,29 @@
             border-radius: 50%;
             transform: translate(-50%, -50%);
             cursor: pointer;
-            display: none; /* ocultos hasta que cargue la imagen */
-        }
-        .numero {
-            position: absolute;
-            color: white;
-            font-size: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
             font-weight: bold;
-            transform: translate(-50%, -150%);
-            pointer-events: none;
-            display: none;
+            color: black;
+        }
+        .punto:hover {
+            transform: translate(-50%, -50%) scale(1.5);
         }
     </style>
 </head>
 <body>
     <div id="map-container">
-        <img src="images/mapa_binibeca.png" alt="Mapa de Binibeca" id="mapa">
-        <div class="punto" style="top: 25%; left: 30%;" id="p1"><span class="numero">1</span></div>
-        <div class="punto" style="top: 40%; left: 50%;" id="p2"><span class="numero">2</span></div>
-        <div class="punto" style="top: 58%; left: 20%;" id="p3"><span class="numero">3</span></div>
-        <div class="punto" style="top: 70%; left: 70%;" id="p4"><span class="numero">4</span></div>
-        <div class="punto" style="top: 40%; left: 65%;" id="p5"><span class="numero">5</span></div>
-        <div class="punto" style="top: 53%; left: 78%;" id="p6"><span class="numero">6</span></div>
-        <div class="punto" style="top: 55%; left: 40%;" id="p7"><span class="numero">7</span></div>
-        <div class="punto" style="top: 34%; left: 15%;" id="p8"><span class="numero">8</span></div>
+        <img src="images/mapa_binibeca.png" alt="Mapa de Binibeca">
+        <div class="punto" style="top: 27%; left: 30%;">1</div>
+        <div class="punto" style="top: 40%; left: 50%;">2</div>
+        <div class="punto" style="top: 53%; left: 20%;">3</div>
+        <div class="punto" style="top: 70%; left: 70%;">4</div>
+        <div class="punto" style="top: 40%; left: 72%;">5</div>
+        <div class="punto" style="top: 51%; left: 76%;">6</div>
+        <div class="punto" style="top: 52%; left: 40%;">7</div>
+        <div class="punto" style="top: 34%; left: 15%;">8</div>
     </div>
-
-    <script>
-        const mapa = document.getElementById('mapa');
-        mapa.onload = () => {
-            document.querySelectorAll('.punto, .numero').forEach(el => el.style.display = 'flex');
-        };
-    </script>
 </body>
 </html>
