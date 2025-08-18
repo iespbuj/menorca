@@ -2,49 +2,46 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Menorca - Mapa de Calas</title>
+    <title>Menorca - Mapa de calas</title>
     <style>
         body {
-            background-color: #111;
+            margin: 0;
+            background-color: #111; /* fondo oscuro */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
         }
-        .map-container {
+        #map-container {
             position: relative;
         }
         #mapa {
-            max-width: 800px;
             display: block;
+            max-width: 90vw;
+            max-height: 90vh;
         }
         .punto {
             position: absolute;
             width: 15px;
             height: 15px;
-            background: white;
+            background-color: white;
             border-radius: 50%;
             cursor: pointer;
-            transition: transform 0.3s;
-        }
-        .punto:hover {
-            transform: scale(2);
         }
     </style>
 </head>
 <body>
-    <div class="map-container">
-        <img id="mapa" src="img/mapa_binibeca.png" alt="Mapa Binibeca">
-        <!-- 8 puntos de ejemplo -->
-        <div class="punto" style="top: 50px; left: 100px;"></div>
-        <div class="punto" style="top: 120px; left: 200px;"></div>
-        <div class="punto" style="top: 180px; left: 350px;"></div>
-        <div class="punto" style="top: 220px; left: 500px;"></div>
-        <div class="punto" style="top: 300px; left: 150px;"></div>
-        <div class="punto" style="top: 350px; left: 300px;"></div>
-        <div class="punto" style="top: 400px; left: 450px;"></div>
-        <div class="punto" style="top: 450px; left: 600px;"></div>
+    <div id="map-container">
+        <img id="mapa" src="images/mapa_binibeca.png" alt="Mapa Binibeca">
+        <!-- 8 puntos de ejemplo, posiciones aproximadas -->
+        <div class="punto" style="top: 20%; left: 30%;"></div>
+        <div class="punto" style="top: 25%; left: 60%;"></div>
+        <div class="punto" style="top: 40%; left: 45%;"></div>
+        <div class="punto" style="top: 50%; left: 70%;"></div>
+        <div class="punto" style="top: 60%; left: 25%;"></div>
+        <div class="punto" style="top: 65%; left: 55%;"></div>
+        <div class="punto" style="top: 75%; left: 40%;"></div>
+        <div class="punto" style="top: 80%; left: 65%;"></div>
     </div>
 </body>
 </html>
