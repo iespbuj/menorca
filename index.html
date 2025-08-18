@@ -28,44 +28,29 @@
             border-radius: 50%;
             transform: translate(-50%, -50%);
             cursor: pointer;
-            transition: transform 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: black;
         }
         .punto:hover {
             transform: translate(-50%, -50%) scale(1.5);
-        }
-        .numero {
-            position: absolute;
-            color: white;
-            font-weight: bold;
-            font-size: 14px;
-            transform: translate(-50%, -150%);
-            pointer-events: none;
         }
     </style>
 </head>
 <body>
     <div id="map-container">
         <img src="images/mapa_binibeca.png" alt="Mapa de Binibeca">
-        
-        <!-- Puntos -->
-        <div class="punto" id="p1" style="top: 20%; left: 30%;"></div>
-        <div class="punto" id="p2" style="top: 40%; left: 50%;"></div>
-        <div class="punto" id="p3" style="top: 60%; left: 20%;"></div>
-        <div class="punto" id="p4" style="top: 70%; left: 70%;"></div>
-        <div class="punto" id="p5" style="top: 25%; left: 75%;"></div>
-        <div class="punto" id="p6" style="top: 50%; left: 80%;"></div>
-        <div class="punto" id="p7" style="top: 80%; left: 40%;"></div>
-        <div class="punto" id="p8" style="top: 35%; left: 15%;"></div>
-        
-        <!-- Números -->
-        <div class="numero" style="top: 20%; left: 30%;">1</div>
-        <div class="numero" style="top: 40%; left: 50%;">2</div>
-        <div class="numero" style="top: 60%; left: 20%;">3</div>
-        <div class="numero" style="top: 70%; left: 70%;">4</div>
-        <div class="numero" style="top: 25%; left: 75%;">5</div>
-        <div class="numero" style="top: 50%; left: 80%;">6</div>
-        <div class="numero" style="top: 80%; left: 40%;">7</div>
-        <div class="numero" style="top: 35%; left: 15%;">8</div>
+        <div class="punto" style="top: 25%; left: 30%;">1</div>
+        <div class="punto" style="top: 40%; left: 50%;">2</div>
+        <div class="punto" style="top: 55%; left: 20%;">3</div>
+        <div class="punto" style="top: 70%; left: 70%;">4</div>
+        <div class="punto" style="top: 40%; left: 75%;">5</div>
+        <div class="punto" style="top: 50%; left: 78%;">6</div>
+        <div class="punto" style="top: 55%; left: 40%;">7</div>
+        <div class="punto" style="top: 35%; left: 15%;">8</div>
     </div>
 </body>
 </html>
