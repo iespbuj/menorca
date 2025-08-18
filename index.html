@@ -1,40 +1,50 @@
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mapa Binibeca</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Menorca - Mapa de Calas</title>
+    <style>
+        body {
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .map-container {
+            position: relative;
+        }
+        #mapa {
+            max-width: 800px;
+            display: block;
+        }
+        .punto {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .punto:hover {
+            transform: scale(2);
+        }
+    </style>
 </head>
 <body>
     <div class="map-container">
-        <img src="images/mapa_binibeca.jpg" alt="Mapa Binibeca" class="mapa">
-
-        <!-- Puntos de calas -->
-        <div class="cala" style="top: 20%; left: 35%;" data-img="img1"></div>
-        <img src="images/img1.jpg" alt="" class="tooltip" style="top: 15%; left: 35%;">
-
-        <div class="cala" style="top: 40%; left: 60%;" data-img="img2"></div>
-        <img src="images/img2.jpg" alt="" class="tooltip" style="top: 35%; left: 60%;">
-
-        <div class="cala" style="top: 55%; left: 50%;" data-img="img3"></div>
-        <img src="images/img3.jpg" alt="" class="tooltip" style="top: 50%; left: 55%;">
-
-        <div class="cala" style="top: 70%; left: 30%;" data-img="img4"></div>
-        <img src="images/img4.jpg" alt="" class="tooltip" style="top: 65%; left: 30%;">
-
-        <div class="cala" style="top: 72%; left: 32%;" data-img="img5"></div>
-        <img src="images/img5.jpg" alt="" class="tooltip" style="top: 67%; left: 32%;">
-
-        <div class="cala" style="top: 80%; left: 45%;" data-img="img6"></div>
-        <img src="images/img6.jpg" alt="" class="tooltip" style="top: 75%; left: 45%;">
-
-        <div class="cala" style="top: 50%; left: 20%;" data-img="img7"></div>
-        <img src="images/img7.png" alt="" class="tooltip" style="top: 45%; left: 20%;">
-
-        <div class="cala" style="top: 15%; left: 70%;" data-img="img8"></div>
-        <img src="images/img8.jpg" alt="" class="tooltip" style="top: 10%; left: 70%;">
+        <img id="mapa" src="img/mapa_binibeca.png" alt="Mapa Binibeca">
+        <!-- 8 puntos de ejemplo -->
+        <div class="punto" style="top: 50px; left: 100px;"></div>
+        <div class="punto" style="top: 120px; left: 200px;"></div>
+        <div class="punto" style="top: 180px; left: 350px;"></div>
+        <div class="punto" style="top: 220px; left: 500px;"></div>
+        <div class="punto" style="top: 300px; left: 150px;"></div>
+        <div class="punto" style="top: 350px; left: 300px;"></div>
+        <div class="punto" style="top: 400px; left: 450px;"></div>
+        <div class="punto" style="top: 450px; left: 600px;"></div>
     </div>
 </body>
 </html>
