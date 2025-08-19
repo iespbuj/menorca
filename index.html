@@ -3,232 +3,143 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calas de Menorca</title>
+<title>Mapa de Menorca</title>
 <style>
   body {
     margin: 0;
-    font-family: sans-serif;
-    background: #f0f0f0;
+    font-family: Arial, sans-serif;
+    background: url('mapa_binibeca.png') no-repeat center center;
+    background-size: cover;
+    overflow-x: hidden;
   }
-
-  .map-container {
+  .mapa {
     position: relative;
     width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
+    height: 100vh;
   }
-
-  .map {
-    width: 100%;
-    display: block;
-  }
-
-  .point {
+  .punto {
     position: absolute;
     cursor: pointer;
-    transform: translate(-50%, -50%);
   }
-
-  .point img {
-    width: 40px;
-    height: 40px;
+  .punto img {
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    border: 2px solid white;
     transition: transform 0.3s;
   }
-
-  .point img:hover {
+  .punto img:hover {
     transform: scale(1.1);
   }
-
-  .section-overlay {
+  .zoom {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.85);
+    background: rgba(0,0,0,0.7);
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.4s;
   }
-
-  .section-overlay.active {
+  .zoom.active {
     opacity: 1;
-    pointer-events: auto;
+    pointer-events: all;
   }
-
-  .section-content {
-    background: transparent;
+  .zoom img {
+    max-width: 80%;
+    max-height: 80%;
+    transition: transform 0.5s;
+  }
+  .zoom .info {
+    position: absolute;
+    bottom: 50px;
     color: white;
     text-align: center;
-    max-width: 90%;
-    max-height: 90%;
-    overflow-y: auto;
-    transform: scale(0.8);
-    transition: transform 0.5s ease;
+    font-size: 1.2em;
+    width: 100%;
   }
-
-  .section-overlay.active .section-content {
-    transform: scale(1);
+  .zoom .info strong {
+    display: block;
+    margin-bottom: 0.5em;
+    font-size: 1.4em;
   }
-
-  .section-content img {
-    max-width: 100%;
-    border-radius: 10px;
-    margin-bottom: 20px;
-  }
-
-  .close-btn {
+  .close {
     position: absolute;
-    top: 20px;
+    top: 30px;
     right: 30px;
-    font-size: 2em;
     color: white;
+    font-size: 2em;
     cursor: pointer;
-  }
-
-  @media (max-width: 600px) {
-    .point img {
-      width: 30px;
-      height: 30px;
-    }
-
-    .close-btn {
-      font-size: 1.5em;
-      top: 15px;
-      right: 20px;
-    }
   }
 </style>
 </head>
 <body>
 
-<div class="map-container">
-  <img src="mapa-menorca.jpg" alt="Mapa de Menorca" class="map">
-
-  <!-- Puntos con mini-fotos -->
-  <div class="point" style="top: 20%; left: 40%;" data-cala="1">
-    <img src="binibeca-mini.jpg" alt="Cala Binibeca">
+<div class="mapa">
+  <div class="punto" style="top: 20%; left: 30%;" data-img="img1.jpg" data-nombre="Cala Binibeca" data-desc="Playa urbana con aguas claras y arena fina. Acceso: Fácil desde el pueblo de Binibeca. Ideal para: Familias y quienes buscan comodidad.">
+    <img src="img1.jpg" alt="Cala Binibeca">
   </div>
-  <div class="point" style="top: 35%; left: 50%;" data-cala="2">
-    <img src="torret-mini.jpg" alt="Cala Torret">
+  <div class="punto" style="top: 35%; left: 50%;" data-img="img2.jpg" data-nombre="Cala Torret" data-desc="Pequeña cala rodeada de rocas y aguas tranquilas. Acceso: Caminando desde Binibeca. Ideal para: Relajación y snorkel.">
+    <img src="img2.jpg" alt="Cala Torret">
   </div>
-  <div class="point" style="top: 25%; left: 60%;" data-cala="3">
-    <img src="fondo-mini.jpg" alt="Caló Fondo">
+  <div class="punto" style="top: 50%; left: 40%;" data-img="img3.jpg" data-nombre="Caló Fondo (Binissafúller)" data-desc="Cala protegida y tranquila, ideal para bañarse sin aglomeraciones. Acceso: Caminando desde Binibeca. Ideal para: Relajación y snorkel.">
+    <img src="img3.jpg" alt="Caló Fondo">
   </div>
-  <div class="point" style="top: 50%; left: 30%;" data-cala="4">
-    <img src="brut-mini.jpg" alt="Cala en Brut">
+  <div class="punto" style="top: 60%; left: 60%;" data-img="img4.jpg" data-nombre="Cala en Brut" data-desc="Conocida por sus plataformas de salto y aguas cristalinas. Acceso: Caminando desde Cala'n Blanes. Ideal para: Amantes de los saltos y snorkel.">
+    <img src="img4.jpg" alt="Cala en Brut">
   </div>
-  <div class="point" style="top: 60%; left: 55%;" data-cala="5">
-    <img src="mitjana-mini.jpg" alt="Cala Mitjana">
+  <div class="punto" style="top: 70%; left: 35%;" data-img="img5.jpg" data-nombre="Cala Mitjana" data-desc="Playa virgen con arena blanca y aguas turquesas. Acceso: Caminando desde Cala Galdana. Ideal para: Senderismo y relajación.">
+    <img src="img5.jpg" alt="Cala Mitjana">
   </div>
-  <div class="point" style="top: 70%; left: 45%;" data-cala="6">
-    <img src="escorxada-mini.jpg" alt="Cala Escorxada">
+  <div class="punto" style="top: 80%; left: 50%;" data-img="img6.jpg" data-nombre="Cala Escorxada" data-desc="Accesible solo a pie o en barco, rodeada de naturaleza virgen. Acceso: Caminando desde Cala Mitjana. Ideal para: Aventureros y quienes buscan tranquilidad.">
+    <img src="img6.jpg" alt="Cala Escorxada">
   </div>
-  <div class="point" style="top: 80%; left: 60%;" data-cala="7">
-    <img src="trebaluger-mini.jpg" alt="Cala Trebaluger">
+  <div class="punto" style="top: 85%; left: 30%;" data-img="img7.png" data-nombre="Cala Trebaluger" data-desc="Cala nudista con arena fina y aguas transparentes. Acceso: Caminando desde Cala Mitjana. Ideal para: Quienes buscan un entorno natural y tranquilo.">
+    <img src="img7.png" alt="Cala Trebaluger">
   </div>
-  <div class="point" style="top: 90%; left: 50%;" data-cala="8">
-    <img src="binidali-mini.jpg" alt="Cala Binidali">
+  <div class="punto" style="top: 90%; left: 55%;" data-img="img8.jpg" data-nombre="Cala Binidali" data-desc="Pequeña cala con aguas tranquilas y entorno natural. Acceso: Fácil desde la carretera. Ideal para: Relajación y snorkel.">
+    <img src="img8.jpg" alt="Cala Binidali">
   </div>
 </div>
 
-<!-- Overlay de sección -->
-<div class="section-overlay" id="sectionOverlay">
-  <div class="close-btn" id="closeBtn">&times;</div>
-  <div class="section-content" id="sectionContent">
-    <!-- Contenido de cada cala se insertará aquí -->
+<div class="zoom" id="zoom">
+  <span class="close" id="close">&times;</span>
+  <img id="zoom-img" src="" alt="">
+  <div class="info">
+    <strong id="zoom-nombre"></strong>
+    <span id="zoom-desc"></span>
   </div>
 </div>
 
 <script>
-  const calas = {
-    1: {
-      nombre: "Cala Binibeca",
-      img: "binibeca.jpg",
-      descripcion: `<strong>Descripción:</strong> Playa urbana con aguas claras y arena fina.<br>
-                    <strong>Acceso:</strong> Fácil desde el pueblo de Binibeca.<br>
-                    <strong>Ideal para:</strong> Familias y quienes buscan comodidad.<br>
-                    <strong>Nota:</strong> Aunque es popular, su belleza la hace imprescindible.`
-    },
-    2: {
-      nombre: "Cala Torret",
-      img: "torret.jpg",
-      descripcion: `<strong>Descripción:</strong> Pequeña cala rodeada de rocas y aguas tranquilas.<br>
-                    <strong>Acceso:</strong> Caminando desde Binibeca.<br>
-                    <strong>Ideal para:</strong> Relajación y snorkel.`
-    },
-    3: {
-      nombre: "Caló Fondo (Binissafúller)",
-      img: "fondo.jpg",
-      descripcion: `<strong>Descripción:</strong> Cala protegida y tranquila, ideal para bañarse sin aglomeraciones.<br>
-                    <strong>Acceso:</strong> Caminando desde Binibeca.<br>
-                    <strong>Ideal para:</strong> Relajación y snorkel.`
-    },
-    4: {
-      nombre: "Cala en Brut",
-      img: "brut.jpg",
-      descripcion: `<strong>Descripción:</strong> Conocida por sus plataformas de salto y aguas cristalinas.<br>
-                    <strong>Acceso:</strong> Caminando desde Cala'n Blanes.<br>
-                    <strong>Ideal para:</strong> Amantes de los saltos y snorkel.<br>
-                    <strong>Nota:</strong> Aunque es conocida, ofrece rincones tranquilos si te alejas del centro.`
-    },
-    5: {
-      nombre: "Cala Mitjana",
-      img: "mitjana.jpg",
-      descripcion: `<strong>Descripción:</strong> Playa virgen con arena blanca y aguas turquesas.<br>
-                    <strong>Acceso:</strong> Caminando desde Cala Galdana.<br>
-                    <strong>Ideal para:</strong> Senderismo y relajación.<br>
-                    <strong>Nota:</strong> Popular, pero su belleza lo compensa.`
-    },
-    6: {
-      nombre: "Cala Escorxada",
-      img: "escorxada.jpg",
-      descripcion: `<strong>Descripción:</strong> Accesible solo a pie o en barco, rodeada de naturaleza virgen.<br>
-                    <strong>Acceso:</strong> Caminando desde Cala Mitjana.<br>
-                    <strong>Ideal para:</strong> Aventureros y quienes buscan tranquilidad.`
-    },
-    7: {
-      nombre: "Cala Trebaluger",
-      img: "trebaluger.jpg",
-      descripcion: `<strong>Descripción:</strong> Cala nudista con arena fina y aguas transparentes.<br>
-                    <strong>Acceso:</strong> Caminando desde Cala Mitjana.<br>
-                    <strong>Ideal para:</strong> Quienes buscan un entorno natural y tranquilo.<br>
-                    <strong>Nota:</strong> Acceso algo complicado, pero recompensa con su belleza.`
-    },
-    8: {
-      nombre: "Cala Binidali",
-      img: "binidali.jpg",
-      descripcion: `<strong>Descripción:</strong> Pequeña cala con aguas tranquilas y entorno natural.<br>
-                    <strong>Acceso:</strong> Fácil desde la carretera.<br>
-                    <strong>Ideal para:</strong> Relajación y snorkel.<br>
-                    <strong>Nota:</strong> Menos concurrida, ideal para escapar del bullicio.`
-    },
-  };
+  const puntos = document.querySelectorAll('.punto');
+  const zoom = document.getElementById('zoom');
+  const zoomImg = document.getElementById('zoom-img');
+  const zoomNombre = document.getElementById('zoom-nombre');
+  const zoomDesc = document.getElementById('zoom-desc');
+  const close = document.getElementById('close');
 
-  const points = document.querySelectorAll('.point');
-  const overlay = document.getElementById('sectionOverlay');
-  const content = document.getElementById('sectionContent');
-  const closeBtn = document.getElementById('closeBtn');
-
-  points.forEach(point => {
-    point.addEventListener('click', () => {
-      const cala = calas[point.dataset.cala];
-      content.innerHTML = `<img src="${cala.img}" alt="${cala.nombre}"><h2><strong>${cala.nombre}</strong></h2><p>${cala.descripcion}</p>`;
-      overlay.classList.add('active');
+  puntos.forEach(punto => {
+    punto.addEventListener('click', () => {
+      zoomImg.src = punto.dataset.img;
+      zoomNombre.textContent = punto.dataset.nombre;
+      zoomDesc.textContent = punto.dataset.desc;
+      zoom.classList.add('active');
     });
   });
 
-  closeBtn.addEventListener('click', () => {
-    overlay.classList.remove('active');
+  close.addEventListener('click', () => {
+    zoom.classList.remove('active');
   });
 
-  overlay.addEventListener('click', (e) => {
-    if(e.target === overlay) overlay.classList.remove('active');
+  zoom.addEventListener('click', (e) => {
+    if(e.target === zoom) {
+      zoom.classList.remove('active');
+    }
   });
 </script>
 
