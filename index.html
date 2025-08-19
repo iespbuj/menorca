@@ -2,158 +2,234 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Mapa Binibeca con Zoom</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calas de Menorca</title>
 <style>
-body {
+  body {
     margin: 0;
-    background-color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-family: Arial, sans-serif;
-}
+    font-family: sans-serif;
+    background: #f0f0f0;
+  }
 
-#map-container {
+  .map-container {
     position: relative;
-}
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+  }
 
-#map-container img {
-    max-width: 80vw;
-    max-height: 80vh;
+  .map {
+    width: 100%;
     display: block;
-}
+  }
 
-.punto {
+  .point {
     position: absolute;
-    width: 25px;
-    height: 25px;
-    background-color: white;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-    font-weight: bold;
-    color: black;
-}
+    transform: translate(-50%, -50%);
+  }
 
-/* Detalle animado */
-.detalle {
+  .point img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    transition: transform 0.3s;
+  }
+
+  .point img:hover {
+    transform: scale(1.1);
+  }
+
+  .section-overlay {
     position: fixed;
-    width: 0;
-    height: 0;
     top: 0;
     left: 0;
-    background-color: white;
-    color: black;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 20px rgba(0,0,0,0.8);
-    z-index: 100;
-    transition: all 0.5s ease;
-    display: flex;
-    flex-direction: column;
-    opacity: 0;
-}
-
-.detalle img {
     width: 100%;
-    flex-shrink: 0;
-}
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
 
-.detalle h2, .detalle p {
-    margin: 10px;
-}
+  .section-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
 
-.cerrar {
+  .section-content {
+    background: transparent;
+    color: white;
+    text-align: center;
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    transform: scale(0.8);
+    transition: transform 0.5s ease;
+  }
+
+  .section-overlay.active .section-content {
+    transform: scale(1);
+  }
+
+  .section-content img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  .close-btn {
     position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 20px;
-    font-weight: bold;
+    top: 20px;
+    right: 30px;
+    font-size: 2em;
+    color: white;
     cursor: pointer;
-    z-index: 101;
-}
+  }
+
+  @media (max-width: 600px) {
+    .point img {
+      width: 30px;
+      height: 30px;
+    }
+
+    .close-btn {
+      font-size: 1.5em;
+      top: 15px;
+      right: 20px;
+    }
+  }
 </style>
 </head>
 <body>
 
-<div id="map-container">
-    <img src="images/mapa_binibeca.png" alt="Mapa de Binibeca">
+<div class="map-container">
+  <img src="mapa-menorca.jpg" alt="Mapa de Menorca" class="map">
 
-    <div class="punto" style="top: 27%; left: 30%;" data-index="0">1</div>
-    <div class="punto" style="top: 40%; left: 50%;" data-index="1">2</div>
-    <div class="punto" style="top: 53%; left: 20%;" data-index="2">3</div>
-    <div class="punto" style="top: 70%; left: 70%;" data-index="3">4</div>
-    <div class="punto" style="top: 40%; left: 72%;" data-index="4">5</div>
-    <div class="punto" style="top: 51%; left: 76%;" data-index="5">6</div>
-    <div class="punto" style="top: 52%; left: 40%;" data-index="6">7</div>
-    <div class="punto" style="top: 34%; left: 15%;" data-index="7">8</div>
+  <!-- Puntos con mini-fotos -->
+  <div class="point" style="top: 20%; left: 40%;" data-cala="1">
+    <img src="binibeca-mini.jpg" alt="Cala Binibeca">
+  </div>
+  <div class="point" style="top: 35%; left: 50%;" data-cala="2">
+    <img src="torret-mini.jpg" alt="Cala Torret">
+  </div>
+  <div class="point" style="top: 25%; left: 60%;" data-cala="3">
+    <img src="fondo-mini.jpg" alt="Caló Fondo">
+  </div>
+  <div class="point" style="top: 50%; left: 30%;" data-cala="4">
+    <img src="brut-mini.jpg" alt="Cala en Brut">
+  </div>
+  <div class="point" style="top: 60%; left: 55%;" data-cala="5">
+    <img src="mitjana-mini.jpg" alt="Cala Mitjana">
+  </div>
+  <div class="point" style="top: 70%; left: 45%;" data-cala="6">
+    <img src="escorxada-mini.jpg" alt="Cala Escorxada">
+  </div>
+  <div class="point" style="top: 80%; left: 60%;" data-cala="7">
+    <img src="trebaluger-mini.jpg" alt="Cala Trebaluger">
+  </div>
+  <div class="point" style="top: 90%; left: 50%;" data-cala="8">
+    <img src="binidali-mini.jpg" alt="Cala Binidali">
+  </div>
 </div>
 
-<div class="detalle" id="detalle">
-    <span class="cerrar" id="cerrar">X</span>
-    <img id="detalle-img" src="" alt="">
-    <h2 id="detalle-titulo"></h2>
-    <p id="detalle-texto"></p>
+<!-- Overlay de sección -->
+<div class="section-overlay" id="sectionOverlay">
+  <div class="close-btn" id="closeBtn">&times;</div>
+  <div class="section-content" id="sectionContent">
+    <!-- Contenido de cada cala se insertará aquí -->
+  </div>
 </div>
 
 <script>
-const calas = [
-    { nombre: "Cala Binibeca", img: "images/img1.jpg", texto: "Playa urbana con aguas claras y arena fina. Acceso fácil desde el pueblo de Binibeca. Ideal para familias y quienes buscan comodidad."},
-    { nombre: "Cala Torret", img: "images/img2.jpg", texto: "Pequeña cala rodeada de rocas y aguas tranquilas. Acceso caminando desde Binibeca. Ideal para relajación y snorkel."},
-    { nombre: "Caló Fondo (Binissafúller)", img: "images/img3.jpg", texto: "Cala protegida y tranquila, ideal para bañarse sin aglomeraciones. Acceso caminando desde Binibeca. Ideal para relajación y snorkel."},
-    { nombre: "Cala en Brut", img: "images/img4.jpg", texto: "Conocida por sus plataformas de salto y aguas cristalinas. Acceso caminando desde Cala'n Blanes. Ideal para amantes de los saltos y snorkel."},
-    { nombre: "Cala Mitjana", img: "images/img5.jpg", texto: "Playa virgen con arena blanca y aguas turquesas. Acceso caminando desde Cala Galdana. Ideal para senderismo y relajación."},
-    { nombre: "Cala Escorxada", img: "images/img6.JPG", texto: "Accesible solo a pie o en barco, rodeada de naturaleza virgen. Acceso caminando desde Cala Mitjana. Ideal para aventureros y quienes buscan tranquilidad."},
-    { nombre: "Cala Trebaluger", img: "images/img7.png", texto: "Cala nudista con arena fina y aguas transparentes. Acceso caminando desde Cala Mitjana. Ideal para quienes buscan un entorno natural y tranquilo."},
-    { nombre: "Cala Binidali", img: "images/img8.jpg", texto: "Pequeña cala con aguas tranquilas y entorno natural. Acceso fácil desde la carretera. Ideal para relajación y snorkel."}
-];
+  const calas = {
+    1: {
+      nombre: "Cala Binibeca",
+      img: "binibeca.jpg",
+      descripcion: `<strong>Descripción:</strong> Playa urbana con aguas claras y arena fina.<br>
+                    <strong>Acceso:</strong> Fácil desde el pueblo de Binibeca.<br>
+                    <strong>Ideal para:</strong> Familias y quienes buscan comodidad.<br>
+                    <strong>Nota:</strong> Aunque es popular, su belleza la hace imprescindible.`
+    },
+    2: {
+      nombre: "Cala Torret",
+      img: "torret.jpg",
+      descripcion: `<strong>Descripción:</strong> Pequeña cala rodeada de rocas y aguas tranquilas.<br>
+                    <strong>Acceso:</strong> Caminando desde Binibeca.<br>
+                    <strong>Ideal para:</strong> Relajación y snorkel.`
+    },
+    3: {
+      nombre: "Caló Fondo (Binissafúller)",
+      img: "fondo.jpg",
+      descripcion: `<strong>Descripción:</strong> Cala protegida y tranquila, ideal para bañarse sin aglomeraciones.<br>
+                    <strong>Acceso:</strong> Caminando desde Binibeca.<br>
+                    <strong>Ideal para:</strong> Relajación y snorkel.`
+    },
+    4: {
+      nombre: "Cala en Brut",
+      img: "brut.jpg",
+      descripcion: `<strong>Descripción:</strong> Conocida por sus plataformas de salto y aguas cristalinas.<br>
+                    <strong>Acceso:</strong> Caminando desde Cala'n Blanes.<br>
+                    <strong>Ideal para:</strong> Amantes de los saltos y snorkel.<br>
+                    <strong>Nota:</strong> Aunque es conocida, ofrece rincones tranquilos si te alejas del centro.`
+    },
+    5: {
+      nombre: "Cala Mitjana",
+      img: "mitjana.jpg",
+      descripcion: `<strong>Descripción:</strong> Playa virgen con arena blanca y aguas turquesas.<br>
+                    <strong>Acceso:</strong> Caminando desde Cala Galdana.<br>
+                    <strong>Ideal para:</strong> Senderismo y relajación.<br>
+                    <strong>Nota:</strong> Popular, pero su belleza lo compensa.`
+    },
+    6: {
+      nombre: "Cala Escorxada",
+      img: "escorxada.jpg",
+      descripcion: `<strong>Descripción:</strong> Accesible solo a pie o en barco, rodeada de naturaleza virgen.<br>
+                    <strong>Acceso:</strong> Caminando desde Cala Mitjana.<br>
+                    <strong>Ideal para:</strong> Aventureros y quienes buscan tranquilidad.`
+    },
+    7: {
+      nombre: "Cala Trebaluger",
+      img: "trebaluger.jpg",
+      descripcion: `<strong>Descripción:</strong> Cala nudista con arena fina y aguas transparentes.<br>
+                    <strong>Acceso:</strong> Caminando desde Cala Mitjana.<br>
+                    <strong>Ideal para:</strong> Quienes buscan un entorno natural y tranquilo.<br>
+                    <strong>Nota:</strong> Acceso algo complicado, pero recompensa con su belleza.`
+    },
+    8: {
+      nombre: "Cala Binidali",
+      img: "binidali.jpg",
+      descripcion: `<strong>Descripción:</strong> Pequeña cala con aguas tranquilas y entorno natural.<br>
+                    <strong>Acceso:</strong> Fácil desde la carretera.<br>
+                    <strong>Ideal para:</strong> Relajación y snorkel.<br>
+                    <strong>Nota:</strong> Menos concurrida, ideal para escapar del bullicio.`
+    },
+  };
 
-const puntos = document.querySelectorAll(".punto");
-const detalle = document.getElementById("detalle");
-const detalleImg = document.getElementById("detalle-img");
-const detalleTitulo = document.getElementById("detalle-titulo");
-const detalleTexto = document.getElementById("detalle-texto");
-const cerrar = document.getElementById("cerrar");
+  const points = document.querySelectorAll('.point');
+  const overlay = document.getElementById('sectionOverlay');
+  const content = document.getElementById('sectionContent');
+  const closeBtn = document.getElementById('closeBtn');
 
-puntos.forEach(punto => {
-    punto.addEventListener("click", e => {
-        const rect = punto.getBoundingClientRect();
-        detalle.style.top = rect.top + rect.height/2 + "px";
-        detalle.style.left = rect.left + rect.width/2 + "px";
-        detalle.style.width = "0";
-        detalle.style.height = "0";
-        detalle.style.opacity = 1;
-        detalle.classList.remove("show");
-
-        const index = punto.dataset.index;
-        detalleImg.src = calas[index].img;
-        detalleTitulo.textContent = calas[index].nombre;
-        detalleTexto.textContent = calas[index].texto;
-
-        // Pequeño timeout para activar la animación
-        setTimeout(() => {
-            detalle.style.top = "50%";
-            detalle.style.left = "50%";
-            detalle.style.width = "90vw";
-            detalle.style.maxWidth = "500px";
-            detalle.style.height = "90vh";
-            detalle.style.transform = "translate(-50%, -50%)";
-        }, 10);
+  points.forEach(point => {
+    point.addEventListener('click', () => {
+      const cala = calas[point.dataset.cala];
+      content.innerHTML = `<img src="${cala.img}" alt="${cala.nombre}"><h2><strong>${cala.nombre}</strong></h2><p>${cala.descripcion}</p>`;
+      overlay.classList.add('active');
     });
-});
+  });
 
-cerrar.addEventListener("click", () => {
-    detalle.style.width = "0";
-    detalle.style.height = "0";
-    detalle.style.top = "0";
-    detalle.style.left = "0";
-    detalle.style.opacity = 0;
-});
+  closeBtn.addEventListener('click', () => {
+    overlay.classList.remove('active');
+  });
+
+  overlay.addEventListener('click', (e) => {
+    if(e.target === overlay) overlay.classList.remove('active');
+  });
 </script>
 
 </body>
