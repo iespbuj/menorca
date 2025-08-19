@@ -16,14 +16,14 @@
             position: relative;
         }
         #map-container img {
-            max-width: 90vw;
-            max-height: 90vh;
+            max-width: 150vw; /* mapa más grande */
+            max-height: 150vh; /* mapa más grande */
             display: block;
         }
         .punto {
             position: absolute;
-            width: 15px;
-            height: 15px;
+            width: 35px;  /* puntos más grandes */
+            height: 35px;
             background-color: white;
             border-radius: 50%;
             transform: translate(-50%, -50%);
@@ -31,21 +31,20 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 10px;
+            font-size: 18px; /* número más grande */
             font-weight: bold;
             color: black;
         }
         .punto:hover {
             transform: translate(-50%, -50%) scale(1.5);
         }
-        /* Contenedor de mini-imagen */
         .mini-img {
             position: absolute;
-            bottom: 120%; /* aparece arriba del punto */
+            bottom: 140%;  /* un poco más arriba del punto */
             left: 50%;
             transform: translateX(-50%);
-            width: 60px;
-            height: 60px;
+            width: 150px;  /* mini-imagen más grande */
+            height: 150px;
             display: none;
             border: 2px solid white;
             border-radius: 5px;
@@ -53,23 +52,6 @@
         .punto:hover .mini-img {
             display: block;
         }
-        #map-container img {
-            max-width: 120vw; /* antes 90vw */
-            max-height: 120vh; /* antes 90vh */
-            display: block;
-    }
-
-        .punto {
-            width: 25px;  /* antes 15px */
-            height: 25px; /* antes 15px */
-            font-size: 14px; /* antes 10px */
-    }
-
-        .mini-img {
-            width: 100px;  /* antes 60px */
-            height: 100px; /* antes 60px */
-            bottom: 130%;  /* un poco más arriba */
-    }
     </style>
 </head>
 <body>
