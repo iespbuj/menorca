@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Mapa Binibeca</title>
+<title>Mapa Binibeca con Zoom</title>
 <style>
 body {
     margin: 0;
@@ -11,21 +11,19 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    font-family: sans-serif;
+    font-family: Arial, sans-serif;
 }
 
 #map-container {
     position: relative;
 }
 
-/* Mapa un poco más pequeño para que no se salga */
 #map-container img {
     max-width: 80vw;
     max-height: 80vh;
     display: block;
 }
 
-/* Puntos */
 .punto {
     position: absolute;
     width: 25px;
@@ -42,139 +40,121 @@ body {
     color: black;
 }
 
-/* Mini-imágenes sobre los puntos */
-.mini-img {
-    position: absolute;
-    top: -70px; /* encima del punto */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 60px;
-    border: 2px solid white;
-    border-radius: 5px;
-}
-
-/* Sección de info al hacer click */
-.info-section {
+/* Detalle animado */
+.detalle {
     position: fixed;
+    width: 0;
+    height: 0;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0,0,0,0.8);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    color: white;
-    z-index: 100;
-    transition: all 0.3s ease;
-}
-
-.info-section.active {
-    display: flex;
-}
-
-.info-content {
-    background: rgba(0,0,0,0.9);
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 90vw;
-    max-height: 80vh;
-    overflow: auto;
-    text-align: center;
-    transform: scale(0.5);
-    transition: transform 0.3s ease;
-}
-
-.info-section.active .info-content {
-    transform: scale(1);
-}
-
-.info-content img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-.close-btn {
-    margin-top: 10px;
-    padding: 5px 15px;
-    background: white;
+    background-color: white;
     color: black;
-    border: none;
-    border-radius: 5px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+    z-index: 100;
+    transition: all 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+}
+
+.detalle img {
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.detalle h2, .detalle p {
+    margin: 10px;
+}
+
+.cerrar {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    font-weight: bold;
     cursor: pointer;
+    z-index: 101;
 }
 </style>
 </head>
 <body>
+
 <div id="map-container">
     <img src="images/mapa_binibeca.png" alt="Mapa de Binibeca">
-    
-    <div class="punto" style="top: 27%; left: 30%;" data-title="Cala 1" data-text="Descripción de la Cala 1" data-img="images/img1.jpg">1
-        <img class="mini-img" src="images/img1.jpg" alt="Mini 1">
-    </div>
-    <div class="punto" style="top: 40%; left: 50%;" data-title="Cala 2" data-text="Descripción de la Cala 2" data-img="images/img2.jpg">2
-        <img class="mini-img" src="images/img2.jpg" alt="Mini 2">
-    </div>
-    <div class="punto" style="top: 53%; left: 20%;" data-title="Cala 3" data-text="Descripción de la Cala 3" data-img="images/img3.jpg">3
-        <img class="mini-img" src="images/img3.jpg" alt="Mini 3">
-    </div>
-    <div class="punto" style="top: 70%; left: 70%;" data-title="Cala 4" data-text="Descripción de la Cala 4" data-img="images/img4.jpg">4
-        <img class="mini-img" src="images/img4.jpg" alt="Mini 4">
-    </div>
-    <div class="punto" style="top: 40%; left: 72%;" data-title="Cala 5" data-text="Descripción de la Cala 5" data-img="images/img5.jpg">5
-        <img class="mini-img" src="images/img5.jpg" alt="Mini 5">
-    </div>
-    <div class="punto" style="top: 51%; left: 76%;" data-title="Cala 6" data-text="Descripción de la Cala 6" data-img="images/img6.JPG">6
-        <img class="mini-img" src="images/img6.JPG" alt="Mini 6">
-    </div>
-    <div class="punto" style="top: 52%; left: 40%;" data-title="Cala 7" data-text="Descripción de la Cala 7" data-img="images/img7.png">7
-        <img class="mini-img" src="images/img7.png" alt="Mini 7">
-    </div>
-    <div class="punto" style="top: 34%; left: 15%;" data-title="Cala 8" data-text="Descripción de la Cala 8" data-img="images/img8.jpg">8
-        <img class="mini-img" src="images/img8.jpg" alt="Mini 8">
-    </div>
+
+    <div class="punto" style="top: 27%; left: 30%;" data-index="0">1</div>
+    <div class="punto" style="top: 40%; left: 50%;" data-index="1">2</div>
+    <div class="punto" style="top: 53%; left: 20%;" data-index="2">3</div>
+    <div class="punto" style="top: 70%; left: 70%;" data-index="3">4</div>
+    <div class="punto" style="top: 40%; left: 72%;" data-index="4">5</div>
+    <div class="punto" style="top: 51%; left: 76%;" data-index="5">6</div>
+    <div class="punto" style="top: 52%; left: 40%;" data-index="6">7</div>
+    <div class="punto" style="top: 34%; left: 15%;" data-index="7">8</div>
 </div>
 
-<!-- Sección de información -->
-<div class="info-section" id="info-section">
-    <div class="info-content">
-        <img id="info-img" src="" alt="">
-        <h2 id="info-title"></h2>
-        <p id="info-text"></p>
-        <button class="close-btn" id="close-btn">X</button>
-    </div>
+<div class="detalle" id="detalle">
+    <span class="cerrar" id="cerrar">X</span>
+    <img id="detalle-img" src="" alt="">
+    <h2 id="detalle-titulo"></h2>
+    <p id="detalle-texto"></p>
 </div>
 
 <script>
-// Seleccionamos todos los puntos
-const puntos = document.querySelectorAll('.punto');
-const infoSection = document.getElementById('info-section');
-const infoImg = document.getElementById('info-img');
-const infoTitle = document.getElementById('info-title');
-const infoText = document.getElementById('info-text');
-const closeBtn = document.getElementById('close-btn');
+const calas = [
+    { nombre: "Cala Binibeca", img: "images/img1.jpg", texto: "Playa urbana con aguas claras y arena fina. Acceso fácil desde el pueblo de Binibeca. Ideal para familias y quienes buscan comodidad."},
+    { nombre: "Cala Torret", img: "images/img2.jpg", texto: "Pequeña cala rodeada de rocas y aguas tranquilas. Acceso caminando desde Binibeca. Ideal para relajación y snorkel."},
+    { nombre: "Caló Fondo (Binissafúller)", img: "images/img3.jpg", texto: "Cala protegida y tranquila, ideal para bañarse sin aglomeraciones. Acceso caminando desde Binibeca. Ideal para relajación y snorkel."},
+    { nombre: "Cala en Brut", img: "images/img4.jpg", texto: "Conocida por sus plataformas de salto y aguas cristalinas. Acceso caminando desde Cala'n Blanes. Ideal para amantes de los saltos y snorkel."},
+    { nombre: "Cala Mitjana", img: "images/img5.jpg", texto: "Playa virgen con arena blanca y aguas turquesas. Acceso caminando desde Cala Galdana. Ideal para senderismo y relajación."},
+    { nombre: "Cala Escorxada", img: "images/img6.JPG", texto: "Accesible solo a pie o en barco, rodeada de naturaleza virgen. Acceso caminando desde Cala Mitjana. Ideal para aventureros y quienes buscan tranquilidad."},
+    { nombre: "Cala Trebaluger", img: "images/img7.png", texto: "Cala nudista con arena fina y aguas transparentes. Acceso caminando desde Cala Mitjana. Ideal para quienes buscan un entorno natural y tranquilo."},
+    { nombre: "Cala Binidali", img: "images/img8.jpg", texto: "Pequeña cala con aguas tranquilas y entorno natural. Acceso fácil desde la carretera. Ideal para relajación y snorkel."}
+];
+
+const puntos = document.querySelectorAll(".punto");
+const detalle = document.getElementById("detalle");
+const detalleImg = document.getElementById("detalle-img");
+const detalleTitulo = document.getElementById("detalle-titulo");
+const detalleTexto = document.getElementById("detalle-texto");
+const cerrar = document.getElementById("cerrar");
 
 puntos.forEach(punto => {
-    punto.addEventListener('click', () => {
-        const imgSrc = punto.dataset.img;
-        const title = punto.dataset.title;
-        const text = punto.dataset.text;
+    punto.addEventListener("click", e => {
+        const rect = punto.getBoundingClientRect();
+        detalle.style.top = rect.top + rect.height/2 + "px";
+        detalle.style.left = rect.left + rect.width/2 + "px";
+        detalle.style.width = "0";
+        detalle.style.height = "0";
+        detalle.style.opacity = 1;
+        detalle.classList.remove("show");
 
-        infoImg.src = imgSrc;
-        infoTitle.textContent = title;
-        infoText.textContent = text;
+        const index = punto.dataset.index;
+        detalleImg.src = calas[index].img;
+        detalleTitulo.textContent = calas[index].nombre;
+        detalleTexto.textContent = calas[index].texto;
 
-        infoSection.classList.add('active');
+        // Pequeño timeout para activar la animación
+        setTimeout(() => {
+            detalle.style.top = "50%";
+            detalle.style.left = "50%";
+            detalle.style.width = "90vw";
+            detalle.style.maxWidth = "500px";
+            detalle.style.height = "90vh";
+            detalle.style.transform = "translate(-50%, -50%)";
+        }, 10);
     });
 });
 
-closeBtn.addEventListener('click', () => {
-    infoSection.classList.remove('active');
+cerrar.addEventListener("click", () => {
+    detalle.style.width = "0";
+    detalle.style.height = "0";
+    detalle.style.top = "0";
+    detalle.style.left = "0";
+    detalle.style.opacity = 0;
 });
 </script>
+
 </body>
 </html>
