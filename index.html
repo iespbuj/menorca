@@ -11,20 +11,21 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    font-family: sans-serif;
 }
 
 #map-container {
     position: relative;
 }
 
-/* Mapa un poco más grande pero que no se salga de la pantalla */
+/* Mapa un poco más pequeño para que no se salga */
 #map-container img {
     max-width: 80vw;
     max-height: 80vh;
     display: block;
 }
 
-/* Puntos grandes como te gustaron */
+/* Puntos */
 .punto {
     position: absolute;
     width: 25px;
@@ -41,36 +42,70 @@ body {
     color: black;
 }
 
-.punto:hover {
-    transform: translate(-50%, -50%) scale(1.5);
-}
-
-/* Contenedor de mini-imagen, título y texto */
-.mini-info {
+/* Mini-imágenes sobre los puntos */
+.mini-img {
     position: absolute;
-    bottom: 120%; /* aparece arriba del punto */
+    top: -70px; /* encima del punto */
     left: 50%;
     transform: translateX(-50%);
-    display: none;
-    border: 2px solid white;
-    border-radius: 5px;
-    background-color: rgba(0,0,0,0.8);
-    color: white;
-    text-align: center;
-    padding: 5px;
-    width: 120px;
-}
-
-.mini-info img {
     width: 60px;
     height: 60px;
-    display: block;
-    margin: 0 auto 5px;
+    border: 2px solid white;
     border-radius: 5px;
 }
 
-.punto:hover .mini-info {
-    display: block;
+/* Sección de info al hacer click */
+.info-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.info-section.active {
+    display: flex;
+}
+
+.info-content {
+    background: rgba(0,0,0,0.9);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 90vw;
+    max-height: 80vh;
+    overflow: auto;
+    text-align: center;
+    transform: scale(0.5);
+    transition: transform 0.3s ease;
+}
+
+.info-section.active .info-content {
+    transform: scale(1);
+}
+
+.info-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.close-btn {
+    margin-top: 10px;
+    padding: 5px 15px;
+    background: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 </style>
 </head>
@@ -78,62 +113,68 @@ body {
 <div id="map-container">
     <img src="images/mapa_binibeca.png" alt="Mapa de Binibeca">
     
-    <div class="punto" style="top: 27%; left: 30%;">1
-        <div class="mini-info">
-            <img src="images/img1.jpg" alt="Mini 1">
-            <h4>Título 1</h4>
-            <p>Texto descriptivo para el punto 1.</p>
-        </div>
+    <div class="punto" style="top: 27%; left: 30%;" data-title="Cala 1" data-text="Descripción de la Cala 1" data-img="images/img1.jpg">1
+        <img class="mini-img" src="images/img1.jpg" alt="Mini 1">
     </div>
-    <div class="punto" style="top: 40%; left: 50%;">2
-        <div class="mini-info">
-            <img src="images/img2.jpg" alt="Mini 2">
-            <h4>Título 2</h4>
-            <p>Texto descriptivo para el punto 2.</p>
-        </div>
+    <div class="punto" style="top: 40%; left: 50%;" data-title="Cala 2" data-text="Descripción de la Cala 2" data-img="images/img2.jpg">2
+        <img class="mini-img" src="images/img2.jpg" alt="Mini 2">
     </div>
-    <div class="punto" style="top: 53%; left: 20%;">3
-        <div class="mini-info">
-            <img src="images/img3.jpg" alt="Mini 3">
-            <h4>Título 3</h4>
-            <p>Texto descriptivo para el punto 3.</p>
-        </div>
+    <div class="punto" style="top: 53%; left: 20%;" data-title="Cala 3" data-text="Descripción de la Cala 3" data-img="images/img3.jpg">3
+        <img class="mini-img" src="images/img3.jpg" alt="Mini 3">
     </div>
-    <div class="punto" style="top: 70%; left: 70%;">4
-        <div class="mini-info">
-            <img src="images/img4.jpg" alt="Mini 4">
-            <h4>Título 4</h4>
-            <p>Texto descriptivo para el punto 4.</p>
-        </div>
+    <div class="punto" style="top: 70%; left: 70%;" data-title="Cala 4" data-text="Descripción de la Cala 4" data-img="images/img4.jpg">4
+        <img class="mini-img" src="images/img4.jpg" alt="Mini 4">
     </div>
-    <div class="punto" style="top: 40%; left: 72%;">5
-        <div class="mini-info">
-            <img src="images/img5.jpg" alt="Mini 5">
-            <h4>Título 5</h4>
-            <p>Texto descriptivo para el punto 5.</p>
-        </div>
+    <div class="punto" style="top: 40%; left: 72%;" data-title="Cala 5" data-text="Descripción de la Cala 5" data-img="images/img5.jpg">5
+        <img class="mini-img" src="images/img5.jpg" alt="Mini 5">
     </div>
-    <div class="punto" style="top: 51%; left: 76%;">6
-        <div class="mini-info">
-            <img src="images/img6.JPG" alt="Mini 6">
-            <h4>Título 6</h4>
-            <p>Texto descriptivo para el punto 6.</p>
-        </div>
+    <div class="punto" style="top: 51%; left: 76%;" data-title="Cala 6" data-text="Descripción de la Cala 6" data-img="images/img6.JPG">6
+        <img class="mini-img" src="images/img6.JPG" alt="Mini 6">
     </div>
-    <div class="punto" style="top: 52%; left: 40%;">7
-        <div class="mini-info">
-            <img src="images/img7.png" alt="Mini 7">
-            <h4>Título 7</h4>
-            <p>Texto descriptivo para el punto 7.</p>
-        </div>
+    <div class="punto" style="top: 52%; left: 40%;" data-title="Cala 7" data-text="Descripción de la Cala 7" data-img="images/img7.png">7
+        <img class="mini-img" src="images/img7.png" alt="Mini 7">
     </div>
-    <div class="punto" style="top: 34%; left: 15%;">8
-        <div class="mini-info">
-            <img src="images/img8.jpg" alt="Mini 8">
-            <h4>Título 8</h4>
-            <p>Texto descriptivo para el punto 8.</p>
-        </div>
+    <div class="punto" style="top: 34%; left: 15%;" data-title="Cala 8" data-text="Descripción de la Cala 8" data-img="images/img8.jpg">8
+        <img class="mini-img" src="images/img8.jpg" alt="Mini 8">
     </div>
 </div>
+
+<!-- Sección de información -->
+<div class="info-section" id="info-section">
+    <div class="info-content">
+        <img id="info-img" src="" alt="">
+        <h2 id="info-title"></h2>
+        <p id="info-text"></p>
+        <button class="close-btn" id="close-btn">X</button>
+    </div>
+</div>
+
+<script>
+// Seleccionamos todos los puntos
+const puntos = document.querySelectorAll('.punto');
+const infoSection = document.getElementById('info-section');
+const infoImg = document.getElementById('info-img');
+const infoTitle = document.getElementById('info-title');
+const infoText = document.getElementById('info-text');
+const closeBtn = document.getElementById('close-btn');
+
+puntos.forEach(punto => {
+    punto.addEventListener('click', () => {
+        const imgSrc = punto.dataset.img;
+        const title = punto.dataset.title;
+        const text = punto.dataset.text;
+
+        infoImg.src = imgSrc;
+        infoTitle.textContent = title;
+        infoText.textContent = text;
+
+        infoSection.classList.add('active');
+    });
+});
+
+closeBtn.addEventListener('click', () => {
+    infoSection.classList.remove('active');
+});
+</script>
 </body>
 </html>
