@@ -45,20 +45,31 @@ body {
     transform: translate(-50%, -50%) scale(1.5);
 }
 
-/* Contenedor de mini-imagen */
-.mini-img {
+/* Contenedor de mini-imagen, título y texto */
+.mini-info {
     position: absolute;
     bottom: 120%; /* aparece arriba del punto */
     left: 50%;
     transform: translateX(-50%);
-    width: 60px;
-    height: 60px;
     display: none;
     border: 2px solid white;
     border-radius: 5px;
+    background-color: rgba(0,0,0,0.8);
+    color: white;
+    text-align: center;
+    padding: 5px;
+    width: 120px;
 }
 
-.punto:hover .mini-img {
+.mini-info img {
+    width: 60px;
+    height: 60px;
+    display: block;
+    margin: 0 auto 5px;
+    border-radius: 5px;
+}
+
+.punto:hover .mini-info {
     display: block;
 }
 </style>
@@ -68,28 +79,60 @@ body {
     <img src="images/mapa_binibeca.png" alt="Mapa de Binibeca">
     
     <div class="punto" style="top: 27%; left: 30%;">1
-        <img class="mini-img" src="images/img1.jpg" alt="Mini 1">
+        <div class="mini-info">
+            <img src="images/img1.jpg" alt="Mini 1">
+            <h4>Título 1</h4>
+            <p>Texto descriptivo para el punto 1.</p>
+        </div>
     </div>
     <div class="punto" style="top: 40%; left: 50%;">2
-        <img class="mini-img" src="images/img2.jpg" alt="Mini 2">
+        <div class="mini-info">
+            <img src="images/img2.jpg" alt="Mini 2">
+            <h4>Título 2</h4>
+            <p>Texto descriptivo para el punto 2.</p>
+        </div>
     </div>
     <div class="punto" style="top: 53%; left: 20%;">3
-        <img class="mini-img" src="images/img3.jpg" alt="Mini 3">
+        <div class="mini-info">
+            <img src="images/img3.jpg" alt="Mini 3">
+            <h4>Título 3</h4>
+            <p>Texto descriptivo para el punto 3.</p>
+        </div>
     </div>
     <div class="punto" style="top: 70%; left: 70%;">4
-        <img class="mini-img" src="images/img4.jpg" alt="Mini 4">
+        <div class="mini-info">
+            <img src="images/img4.jpg" alt="Mini 4">
+            <h4>Título 4</h4>
+            <p>Texto descriptivo para el punto 4.</p>
+        </div>
     </div>
     <div class="punto" style="top: 40%; left: 72%;">5
-        <img class="mini-img" src="images/img5.jpg" alt="Mini 5">
+        <div class="mini-info">
+            <img src="images/img5.jpg" alt="Mini 5">
+            <h4>Título 5</h4>
+            <p>Texto descriptivo para el punto 5.</p>
+        </div>
     </div>
     <div class="punto" style="top: 51%; left: 76%;">6
-        <img class="mini-img" src="images/img6.JPG" alt="Mini 6">
+        <div class="mini-info">
+            <img src="images/img6.JPG" alt="Mini 6">
+            <h4>Título 6</h4>
+            <p>Texto descriptivo para el punto 6.</p>
+        </div>
     </div>
     <div class="punto" style="top: 52%; left: 40%;">7
-        <img class="mini-img" src="images/img7.png" alt="Mini 7">
+        <div class="mini-info">
+            <img src="images/img7.png" alt="Mini 7">
+            <h4>Título 7</h4>
+            <p>Texto descriptivo para el punto 7.</p>
+        </div>
     </div>
     <div class="punto" style="top: 34%; left: 15%;">8
-        <img class="mini-img" src="images/img8.jpg" alt="Mini 8">
+        <div class="mini-info">
+            <img src="images/img8.jpg" alt="Mini 8">
+            <h4>Título 8</h4>
+            <p>Texto descriptivo para el punto 8.</p>
+        </div>
     </div>
 </div>
 </body>
