@@ -38,9 +38,26 @@ body {
     font-size: 14px;
     font-weight: bold;
     color: black;
+
+    animation: flotar 2s ease-in-out infinite alternate, parpadear 1.5s infinite;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* Detalle animado */
+.punto:hover {
+    transform: translate(-50%, -50%) scale(1.3);
+    box-shadow: 0 0 15px white;
+}
+
+@keyframes flotar {
+    0% { transform: translate(-50%, -50%) translateY(0); }
+    100% { transform: translate(-50%, -50%) translateY(-8px); }
+}
+
+@keyframes parpadear {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
 .detalle {
     position: fixed;
     width: 0;
@@ -173,8 +190,8 @@ cerrar.addEventListener("click", () => {
     detalle.style.transform = "translate(-50%, -50%) scale(0)";
     detalle.style.opacity = 0;
 });
-    document.getElementById("ayuda").addEventListener("click", () => {
-            window.location.href = "ayuda.html";
+document.getElementById("ayuda").addEventListener("click", () => {
+    window.location.href = "ayuda.html";
 });        
 </script>
 
